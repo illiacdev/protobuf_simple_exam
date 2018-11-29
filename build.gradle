@@ -1,0 +1,86 @@
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+//        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.7'
+    }
+}
+
+/*plugins {
+    id 'java'
+    id 'com.google.protobuf'
+}*/
+
+
+
+
+def protocVersion = '3.6.1'
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    /*plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }*/
+}
+
+
+
+sourceSets {
+    main {
+        proto {
+            // In addition to the default 'src/main/proto'
+//            srcDir 'src/main/proto'
+//            srcDir 'src/main/protocolbuffers'
+            // In addition to the default '**/*.proto' (use with caution).
+            // Using an extension other than 'proto' is NOT recommended,
+            // because when proto files are published along with class files, we can
+            // only tell the type of a file from its extension.
+//            include '**/*.protodevel'
+        }
+        java {
+            java {
+//                srcDirs 'build/generated/source/proto/main/grpc'
+                srcDirs 'build/generated/source/proto/main/java'
+            }
+        }
+    }
+
+}
+
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.6.1'
+
+    // https://mvnrepository.com/artifact/com.googlecode.protobuf-java-format/protobuf-java-format
+//    compile group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'
+
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java-util
+    compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.6.1'
+
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+
+}
